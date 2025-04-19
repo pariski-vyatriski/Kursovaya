@@ -12,6 +12,11 @@ jobs:
     
     steps:
 
-    
       - name: Build Docker image
-        run: docker build -t node-app:latest .
+        run: docker build -t pariska/appjs:latest .
+
+      - name: Login DockerHub
+        run: docker login -u pariska -p  ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Push image to DockerHub
+        run: docker push pariska/appjs:latest
