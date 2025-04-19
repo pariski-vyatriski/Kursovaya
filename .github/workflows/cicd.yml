@@ -28,7 +28,7 @@ jobs:
         run: |
           docker stop my-app || true
           docker rm my-app || true
-          docker image prune -a || true
+          docker rmi -f $(docker images -q)
 
   deploy:
     runs-on: self-hosted
