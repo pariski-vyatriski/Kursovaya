@@ -35,6 +35,8 @@ jobs:
     steps:
       - name: deploy container
         run: docker run -d -p 4000:80 --name  my-app pariska/appjs:latest
+    needs:
+      - build
 
 
 
