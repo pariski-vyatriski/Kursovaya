@@ -7,11 +7,10 @@ on:
       - development
 
 jobs:
+
   build:
     runs-on: self-hosted
-    
     steps:
-
       - name: Build Docker image
         run: docker build -t pariska/appjs:latest .
 
@@ -20,3 +19,25 @@ jobs:
 
       - name: Push image to DockerHub
         run: docker push pariska/appjs:latest
+
+
+  clean:
+    runs-on: self-hosted
+    steps:
+      - name: clean past version
+        run: |
+          docker stop my-app || true
+          docker rm my-app || true
+          docker image prune -a || true
+
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: deploy container
+        run: docker run -d -p 4000:80 --name  my-app pariska/appjs:latest
+
+
+
+
+
+    
