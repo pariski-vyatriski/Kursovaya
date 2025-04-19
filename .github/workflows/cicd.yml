@@ -11,6 +11,10 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
+    
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Build Docker image
         run: docker build -t pariska/appjs:latest .
 
