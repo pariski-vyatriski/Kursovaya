@@ -1,4 +1,4 @@
-name: Node.js CI/CD with GitLab Flow
+name: Node.js CI/CD
 
 on:
   push:
@@ -15,7 +15,6 @@ jobs:
 
   build:
     runs-on: self-hosted
-    if: github.ref == 'refs/heads/development'
     steps:
     
       - name: Checkout repository
@@ -33,7 +32,9 @@ jobs:
 
   clean:
     runs-on: self-hosted
-    if: github.ref == 'refs/heads/main'
+    if: |
+      github.ref == 'refs/heads/main' ||
+      (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/main')
     steps:
       - name: clean past version
         run: |
@@ -43,7 +44,9 @@ jobs:
 
   deploy:
     runs-on: self-hosted
-    if: github.ref == 'refs/heads/main'
+    if: |
+      github.ref == 'refs/heads/main' ||
+      (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/main')
     steps:
       - name: deploy container
         run: docker run -d -p 4000:80 --name  my-app pariska/appjs:latest
