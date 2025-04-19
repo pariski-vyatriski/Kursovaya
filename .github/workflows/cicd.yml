@@ -4,47 +4,12 @@ on:
   push:
     branches:
       - main
-      - production
-      - staging
-      - 'feature/'
-      - 'bugfix/'
-      - 'hotfix/'
-      - 'release/'
-  pull_request:
-    branches:
-      - main
-      - production
-      - staging
+      - development
 
 jobs:
-  build-and-deploy:
-    runs-on: self-hosted  # обязательно настроить self-hosted runner на Linux
-
+  build:
+    runs-on: self-hosted
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run linter
-        run: |
-          npm install eslint --save-dev
-          npx eslint . --config eslint.config.js
-      
       - name: Build Docker image
         run: docker build -t node-app:latest .
-
-      - name: Stop and remove existing container
-        run: |
-          docker stop node-app  true
-          docker rm -f node-app || true
-
-      - name: Run Docker container
-        run: |
-          docker run -d -p 4000:80 --name node-app node-app:latest
