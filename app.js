@@ -41,6 +41,20 @@ app.get('/', (req, res) => {
           border-radius: 8px;
           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+	.action-button {
+          margin-top: 20px;
+          padding: 12px 24px;
+          background-color: #ff6b6b;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .action-button.clicked {
+          background-color: #51cf66;
+        }
       </style>
     </head>
     <body>
@@ -56,6 +70,10 @@ app.get('/', (req, res) => {
         <img src="/Docker.png" alt="Пример 2">
         <img src="/JS.png" alt="Пример 3">
       </div>
+      <button class="action-button" onclick="this.textContent='Молодец!'; this.classList.add('clicked')">
+        Прочитал? Если да то нажми на кнопку)
+      </button>
+
     </body>
     </html>
   `);
@@ -64,4 +82,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Сервер запущен на http://localhost:${port}`);
 });
-
